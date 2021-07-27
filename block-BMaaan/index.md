@@ -45,4 +45,6 @@ Q2. Use aggregation framework to
  ])
     
 - Count total answer by a particular user
-    //
+    //db.answers.aggregate([
+        {$group: {_id: authorId, count: {$sum: 1}}}
+    ])
