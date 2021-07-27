@@ -20,8 +20,29 @@ Use indexes to support queries related to questions, tags etc..
 Q2. Use aggregation framework to
 
 - Get array of all the tags used in the questions
+    //db.questions.distinct('tags');
 - Get total questions count
+    //db.questions.count();
 - Total answers count overall and question specific as well
+    //db.answers.count();
+    db.answers.aggregate([
+        {$group: {_id: "$questionId", sum: {$sum: 1}}}
+    ])
 - Count total reputation of a user
+
 - total views on a particular day
+
+ db.views.aggregate([
+     {$group: {
+         _id: {
+             question: "$questionId",
+             year: {$year: "$date"},
+            month: {$month: "$date"},
+            day: {$dayOfMonth: "$date"}
+         },
+         count: {$sum: 1}
+     }}
+ ])
+    
 - Count total answer by a particular user
+    //
